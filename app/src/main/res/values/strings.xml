@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">InfiniteRotation</string>
+    <string name="actual_position">Actual Position: [%s]</string>
+</resources>
