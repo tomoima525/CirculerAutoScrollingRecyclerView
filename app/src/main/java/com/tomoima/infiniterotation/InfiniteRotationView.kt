@@ -35,12 +35,12 @@ class InfiniteRotationView(context: Context, attributeSet: AttributeSet)
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)
 
-        adapter.getListSize()
+        adapter.itemCount
                 .takeIf { it > 1 }
                 ?.apply {
-                    onScrollListener = OnScrollListener(adapter.getListSize(), layoutManager)
+                    onScrollListener = OnScrollListener(adapter.itemCount, layoutManager)
                     recyclerView.addOnScrollListener(onScrollListener)
-                    recyclerView.scrollToPosition(adapter.getListSize())
+                    recyclerView.scrollToPosition(1)
                 }
     }
 
@@ -51,13 +51,12 @@ class InfiniteRotationView(context: Context, attributeSet: AttributeSet)
             super.onScrolled(recyclerView, dx, dy)
             val firstItemVisible = layoutManager.findFirstVisibleItemPosition()
 
-
-            if (firstItemVisible > itemCount && firstItemVisible % itemCount == 0) {
+            if (firstItemVisible > 0 && firstItemVisible % (itemCount - 1) == 0) {
                 // When position reaches end of the list, it should go back to the beginning
-                recyclerView?.scrollToPosition(itemCount)
-            } else if (firstItemVisible == itemCount - 1) {
+                recyclerView?.scrollToPosition(1)
+            } else if (firstItemVisible == 0) {
                 // When position reaches beginning of the list, it should go back to the end
-                recyclerView?.scrollToPosition(itemCount * 2)
+                recyclerView?.scrollToPosition(itemCount - 1)
             }
         }
     }
