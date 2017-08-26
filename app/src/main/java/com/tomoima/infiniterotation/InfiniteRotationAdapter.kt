@@ -11,8 +11,10 @@ import butterknife.ButterKnife
 /**
  * Created by tomoaki on 2017/08/13.
  */
-class InfiniteRotationAdapter(val list: List<ItemInfo>)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class InfiniteRotationAdapter(itemList: List<ItemInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val list: List<ItemInfo> = listOf(itemList.last()) + itemList + listOf(itemList.first())
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         (holder as? ItemViewHolder)?.let {
             it.pageName.text = list[position % list.size].page
@@ -29,9 +31,7 @@ class InfiniteRotationAdapter(val list: List<ItemInfo>)
         return ItemViewHolder(view)
     }
 
-    override fun getItemCount() = list.size * 3
-
-    fun getListSize() = list.size
+    override fun getItemCount() = list.size
 
     internal class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
         @BindView(R.id.page_name)
