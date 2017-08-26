@@ -15,7 +15,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
-        rotationView.setAdapter(InfiniteRotationAdapter(createItems()))
+        val items = createItems()
+        rotationView.setAdapter(InfiniteRotationAdapter(items))
+        rotationView.autoScroll(items.size, 2000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        rotationView.stopAutoScroll()
     }
 
     private fun createItems() = Array(4, { i ->
